@@ -154,7 +154,7 @@ public final class AsyncLocationManager {
         })
     }
     
-#if !APPCLIP && !os(tvOS)
+#if !os(tvOS)
     @available(*, deprecated, message: "Use new function requestPermission(with:)")
     @available(watchOS 7.0, *)
     @available(iOS 14, *)
