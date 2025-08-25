@@ -386,6 +386,14 @@ extension AsyncLocationManager {
                     proxyDelegate.addPerformer(authorizationPerformer)
                     locationManager.requestAlwaysAuthorization()
                 }
+#elseif APPCLIP
+                if #available(iOS 14, *), locationManager.authorizationStatus != .notDetermined {
+                    continuation.resume(with: .success(locationManager.authorizationStatus))
+                } else {
+                    authorizationPerformer.linkContinuation(continuation)
+                    proxyDelegate.addPerformer(authorizationPerformer)
+                    locationManager.requestWhenInUseAuthorization()
+                }
 #else
                 if #available(iOS 14, tvOS 14, watchOS 7, *), locationManager.authorizationStatus != .notDetermined && locationManager.authorizationStatus != .authorizedWhenInUse {
                     continuation.resume(with: .success(locationManager.authorizationStatus))
